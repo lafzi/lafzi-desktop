@@ -1,45 +1,50 @@
 var fs = require('fs');
 
-var files = [
-    'index_nv.txt',
-    'index_v.txt',
-    'muqathaat.txt',
-    'posmap_nv.txt',
-    'posmap_v.txt',
-    'quran_teks.txt',
-    'quran_trans_indonesian.txt'
-];
+function loadResources(rendererWindow, callback) {
 
-var totalSize = 0;
+    var files = [
+        'index_nv.txt',
+        'index_v.txt',
+        'muqathaat.txt',
+        'posmap_nv.txt',
+        'posmap_v.txt',
+        'quran_teks.txt',
+        'quran_trans_indonesian.txt'
+    ];
 
-files.forEach(function(f) {
-    totalSize += fs.statSync('data/' + f).size;
-});
+    var totalSize = 0;
 
-var loaded = 0;
-var buffer = {};
-
-files.forEach(function(f) {
-
-    buffer[f] = '';
-
-    var readable = fs.createReadStream('data/' + f);
-    readable.on('data', function(chunk) {
-        loaded += chunk.length;
-        var percent = loaded / totalSize * 100;
-        console.log('Loading ', percent.toFixed(2));
-
-        buffer[f] += chunk;
-
-        if (loaded >= totalSize) {
-            console.log("ALL LOADED");
-        }
+    files.forEach(function (f) {
+        totalSize += fs.statSync('data/' + f).size;
     });
 
-    // readable.on('end', function() {
-    //     console.log(buffer[f].length);
-    // });
+    var loaded = 0;
+    var buffer = {};
 
-});
+    files.forEach(function (f) {
+
+        var name = f.slice(0, -4);
+        buffer[name] = '';
+
+        var readable = fs.createReadStream('data/' + f);
+        readable.on('data', function (chunk) {
+            loaded += chunk.length;
+            var percent = loaded / totalSize * 100;
+
+            //console.log('Loading ', percent.toFixed(2));
+            rendererWindow.webContents.send('loadProgress', percent);
+
+            buffer[name] += chunk;
+
+            if (loaded >= totalSize) {
+                callback(buffer);
+            }
+        });
+
+    });
+
+}
+
+module.exports.loadResources = loadResources;
 
 
