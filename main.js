@@ -1,17 +1,15 @@
 var electron = require('electron');
-// Module to control application life.
 var app = electron.app;
-// Module to create native browser window.
 var BrowserWindow = electron.BrowserWindow;
 
 var loader = require('./dataLoader');
+var parser = require('./dataParser');
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 var mainWindow = null;
 
+//
+
 function createWindow() {
-    // Create the browser window.
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -19,7 +17,6 @@ function createWindow() {
         maximizable: false
     });
 
-    // and load the index.html of the app.
     mainWindow.loadURL(`file://${__dirname}/index.html`);
 
     // Open the DevTools.
@@ -27,15 +24,19 @@ function createWindow() {
 
     mainWindow.webContents.on('did-finish-load', function () {
         loader.loadResources(mainWindow, function(buffer) {
-            console.log(buffer['posmap_v']);
+            var dataMuqathaat = parser.parseMuqathaat(buffer['muqathaat']);
+            var dataQuran = parser.parseQuran(buffer['quran_teks'], buffer['quran_trans_indonesian']);
+            var dataPosmap = {};
+            dataPosmap['nv'] = parser.parsePosmap(buffer['posmap_nv']);
+            dataPosmap['v'] = parser.parsePosmap(buffer['posmap_v']);
+
+            var dataIndex = {};
+            dataIndex['nv'] = parser.parseIndex(buffer['index_nv']);
+            dataIndex['v'] = parser.parseIndex(buffer['index_v']);
         });
     });
 
-    // Emitted when the window is closed.
     mainWindow.on('closed', function () {
-        // Dereference the window object, usually you would store windows
-        // in an array if your app supports multi windows, this is the time
-        // when you should delete the corresponding element.
         mainWindow = null
     })
 }
