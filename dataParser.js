@@ -78,7 +78,7 @@ module.exports.parseIndex = function (buffer) {
             posts.split(';').forEach(function (post) {
                 var postData = post.split(':');
                 var obj = {
-                    doc: Number(postData[0]),
+                    docID: Number(postData[0]),
                     freq: Number(postData[1]),
                     pos: strToIntArray(postData[2])
                 };

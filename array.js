@@ -56,3 +56,7 @@ function flattenValues(obj) {
 //     'abc': [1,5,7,9],
 //     'def': [8,9,1,1, 2]
 // }));
+
+module.exports.flattenValues = flattenValues;
+module.exports.contiguityScore = contiguityScore;
+module.exports.LCS = LCS;

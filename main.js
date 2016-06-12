@@ -4,7 +4,7 @@ var BrowserWindow = electron.BrowserWindow;
 
 var loader = require('./dataLoader');
 var parser = require('./dataParser');
-var phonetic = require('./phonetic');
+var searcher = require('./searcher');
 
 var mainWindow = null;
 
@@ -35,8 +35,8 @@ function createWindow() {
             dataIndex['nv'] = parser.parseIndex(buffer['index_nv']);
             dataIndex['v'] = parser.parseIndex(buffer['index_v']);
 
-            console.log(phonetic.convert("mingkoblikum langalakum tatakun"));
-            console.log(phonetic.convertNoVowel("mingkoblikum langalakum tatakun"));
+            var result = searcher.search(dataIndex.v, "halumma ilayna", 0.75);
+            console.log(result);
         });
     });
 
