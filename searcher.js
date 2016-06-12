@@ -26,7 +26,7 @@ module.exports.search = function (docIndex, query, threshold, mode) {
 
     var queryTrigrams = trigram.extract(queryFinal);
     if (Object.keys(queryTrigrams).length <= 0)
-        return [];
+        return {};
 
     var matchedDocs = {};
 
@@ -37,7 +37,7 @@ module.exports.search = function (docIndex, query, threshold, mode) {
             docIndex[trigram].forEach(function (match) {
 
                 // hitung jumlah kemunculan dll
-                if (matchedDocs[match.docID]) {
+                if (matchedDocs[match.docID] !== undefined) {
                     matchedDocs[match.docID].matchCount += (trigramFreq < match.freq) ? trigramFreq : match.freq;
                 } else {
                     matchedDocs[match.docID] = new LafziDocument();
