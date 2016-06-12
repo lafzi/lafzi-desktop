@@ -35,8 +35,9 @@ function createWindow() {
             dataIndex['nv'] = parser.parseIndex(buffer['index_nv']);
             dataIndex['v'] = parser.parseIndex(buffer['index_v']);
 
-            var result = searcher.search(dataIndex.v, "halumma ilayna", 0.75);
-            console.log(result);
+            var result = searcher.search(dataIndex.v, "ya waylata", 0.90);
+            var ranked = searcher.rank(result, dataPosmap.v, dataQuran);
+            console.dir(ranked, {depth: 10});
         });
     });
 

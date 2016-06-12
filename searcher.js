@@ -14,6 +14,9 @@ var LafziDocument = function() {
 
 };
 
+/**
+ * @returns {Array.<LafziDocument>}
+ */
 module.exports.search = function (docIndex, query, threshold, mode) {
     //  mode = v | nv
     if (mode === undefined) mode = 'v';
@@ -51,9 +54,9 @@ module.exports.search = function (docIndex, query, threshold, mode) {
         }
     });
 
-    var filteredDocs = {};
+    var filteredDocs = [];
     var minScore = threshold * Object.keys(queryTrigrams).length;
-    console.log(minScore);
+
     Object.keys(matchedDocs).forEach(function (docID) {
         var doc = matchedDocs[docID];
 
@@ -65,7 +68,7 @@ module.exports.search = function (docIndex, query, threshold, mode) {
         doc.score = orderScore * doc.contigScore;
 
         if (doc.score >= minScore) {
-            filteredDocs[docID] = doc;
+            filteredDocs.push(doc);
         }
     });
 
@@ -73,3 +76,62 @@ module.exports.search = function (docIndex, query, threshold, mode) {
 
 };
 
+Array.prototype.unique = function(){
+    var u = {}, a = [];
+    for(var i = 0, l = this.length; i < l; ++i){
+        if(u.hasOwnProperty(this[i])) {
+            continue;
+        }
+        a.push(this[i]);
+        u[this[i]] = 1;
+    }
+    return a;
+};
+
+/**
+ * @param {Array.<LafziDocument>} filteredDocs
+ * @param {Array.<Array>} posmapData
+ * @param {Array.<{surah:Number,name:string,ayat:Number,text:string,trans:string}>} quranTextData
+ */
+module.exports.rank = function (filteredDocs, posmapData, quranTextData) {
+
+    for (var i = 0; i < filteredDocs.length; i++) {
+        var doc = filteredDocs[i];
+
+        var realPos = [];
+        var posmap = posmapData[doc.id - 1];
+        var seq = [];
+
+        doc.LCS.forEach(function (pos) {
+            seq.push(pos);
+            seq.push(pos + 1);
+            seq.push(pos + 2);
+        });
+        seq = seq.unique();
+        seq.forEach(function (pos) {
+            realPos.push(posmap[pos - 1]);
+        });
+
+        doc.highlightPos = array.highlightSpan(realPos, 6);
+
+        // additional scoring based on space
+        if (quranTextData !== undefined) {
+            var endPos = doc.highlightPos[doc.highlightPos.length - 1][1];
+            var docText = quranTextData[doc.id - 1].text;
+            if (docText[endPos + 1] == ' ') doc.score += 0.01;
+            if (docText[endPos + 2] == ' ') doc.score += 0.01;
+            if (docText[endPos + 3] == ' ') doc.score += 0.01;
+        }
+
+        delete doc.LCS;
+        delete doc.matchTerms;
+        delete doc.contigScore;
+    }
+
+    filteredDocs.sort(function (docA, docB) {
+        return docB.score - docA.score;
+    });
+
+    return filteredDocs;
+
+};
