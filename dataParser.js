@@ -9,7 +9,9 @@ module.exports.parseMuqathaat = function (buffer) {
 
     var lines = buffer.split('\n');
     var result = {};
-    lines.forEach(function(line) {
+    for (var i = 0; i < lines.length; i++) {
+        var line = lines[i];
+
         var data = line.split('|');
         var noSurat = data[0];
         var noAyat = data[2];
@@ -18,7 +20,7 @@ module.exports.parseMuqathaat = function (buffer) {
             result[noSurat] = {};
 
         result[noSurat][noAyat] = text;
-    });
+    }
 
     return result;
 };
@@ -56,9 +58,10 @@ module.exports.parsePosmap = function (buffer) {
     var lines = buffer.split('\n');
     var result = [];
 
-    lines.forEach(function (line) {
+    for (var i = 0; i < lines.length; i++) {
+        var line = lines[i];
         result.push(strToIntArray(line));
-    });
+    }
 
     return result;
 
@@ -69,13 +72,17 @@ module.exports.parseIndex = function (buffer) {
     var lines = buffer.split('\n');
     var result = {};
 
-    lines.forEach(function (line) {
+    for (var i = 0; i < lines.length; i++) {
+        var line = lines[i];
+
         var d = line.split('\x09');
         var term = d[0];
         var posts = d[1];
         result[term] = [];
         if (posts) {
-            posts.split(';').forEach(function (post) {
+            var postsSplitted = posts.split(';');
+            for (var j = 0; j < postsSplitted.length; j++) {
+                var post = postsSplitted[j];
                 var postData = post.split(':');
                 var obj = {
                     docID: Number(postData[0]),
@@ -83,9 +90,9 @@ module.exports.parseIndex = function (buffer) {
                     pos: strToIntArray(postData[2])
                 };
                 result[term].push(obj);
-            });
+            }
         }
-    });
+    }
 
     return result;
 

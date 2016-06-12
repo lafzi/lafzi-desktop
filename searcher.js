@@ -29,7 +29,7 @@ module.exports.search = function (docIndex, query, threshold, mode) {
 
     var queryTrigrams = trigram.extract(queryFinal);
     if (Object.keys(queryTrigrams).length <= 0)
-        return {};
+        return [];
 
     var matchedDocs = {};
 
@@ -37,7 +37,9 @@ module.exports.search = function (docIndex, query, threshold, mode) {
         var trigramFreq = queryTrigrams[trigram];
 
         if (docIndex[trigram] && Array.isArray(docIndex[trigram])) {
-            docIndex[trigram].forEach(function (match) {
+            var indexEntry = docIndex[trigram];
+            for (var i = 0; i < indexEntry.length; i++) {
+                var match = indexEntry[i];
 
                 // hitung jumlah kemunculan dll
                 if (matchedDocs[match.docID] !== undefined) {
@@ -50,14 +52,16 @@ module.exports.search = function (docIndex, query, threshold, mode) {
 
                 matchedDocs[match.docID].matchTerms[trigram] = match.pos;
 
-            })
+            }
         }
     });
 
     var filteredDocs = [];
     var minScore = threshold * Object.keys(queryTrigrams).length;
 
-    Object.keys(matchedDocs).forEach(function (docID) {
+    var matches = Object.keys(matchedDocs);
+    for (var i = 0; i < matches.length; i++) {
+        var docID = matches[i];
         var doc = matchedDocs[docID];
 
         var lcs = array.LCS(array.flattenValues(doc.matchTerms));
@@ -70,7 +74,7 @@ module.exports.search = function (docIndex, query, threshold, mode) {
         if (doc.score >= minScore) {
             filteredDocs.push(doc);
         }
-    });
+    }
 
     return filteredDocs;
 
@@ -102,15 +106,18 @@ module.exports.rank = function (filteredDocs, posmapData, quranTextData) {
         var posmap = posmapData[doc.id - 1];
         var seq = [];
 
-        doc.LCS.forEach(function (pos) {
+        for (var j = 0; j < doc.LCS.length; j++) {
+            var pos = doc.LCS[j];
             seq.push(pos);
             seq.push(pos + 1);
             seq.push(pos + 2);
-        });
+        }
         seq = seq.unique();
-        seq.forEach(function (pos) {
+
+        for (var k = 0; k < seq.length; k++) {
+            pos = seq[k];
             realPos.push(posmap[pos - 1]);
-        });
+        }
 
         doc.highlightPos = array.highlightSpan(realPos, 6);
 

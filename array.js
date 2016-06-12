@@ -44,9 +44,11 @@ function LCS(seq, maxgap) {
 
 function flattenValues(obj) {
     var result = [];
-    Object.keys(obj).forEach(function (key) {
+    var keys = Object.keys(obj);
+    for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
         result = result.concat(obj[key]);
-    });
+    }
     return result;
 }
 
