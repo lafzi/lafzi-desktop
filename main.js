@@ -4,6 +4,7 @@ var BrowserWindow = electron.BrowserWindow;
 
 var loader = require('./dataLoader');
 var parser = require('./dataParser');
+var phonetic = require('./phonetic');
 
 var mainWindow = null;
 
@@ -33,6 +34,9 @@ function createWindow() {
             var dataIndex = {};
             dataIndex['nv'] = parser.parseIndex(buffer['index_nv']);
             dataIndex['v'] = parser.parseIndex(buffer['index_v']);
+
+            console.log(phonetic.convert("mingkoblikum langalakum tatakun"));
+            console.log(phonetic.convertNoVowel("mingkoblikum langalakum tatakun"));
         });
     });
 
