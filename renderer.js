@@ -8,13 +8,14 @@ ipc.on('loadProgress', function(e, percent) {
     document.getElementById('progress').style.width = percent.toFixed(2) + '%';
 });
 
-var searchBtn = document.getElementById('searchBtn');
-var searchInput = document.getElementById('searchInput');
-var searchResult = document.getElementById('searchResult');
+var searchBtn = $('#searchBtn');
+var searchInput = $('#searchInput');
+var searchResult = $('#searchResult');
 
-searchBtn.addEventListener('click', function () {
-    ipc.send('invokeSearch', searchInput.value);
+searchBtn.on('click', function () {
+    ipc.send('invokeSearch', searchInput.val());
     ipc.once('searchDone', function (event, result) {
-        searchResult.innerHTML = JSON.stringify(result, null, 2);
+        searchResult.html(JSON.stringify(result, null, 2));
     });
 });
+

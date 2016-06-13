@@ -3,9 +3,9 @@ var app = electron.app;
 var BrowserWindow = electron.BrowserWindow;
 var ipc = electron.ipcMain;
 
-var loader = require('./dataLoader');
-var parser = require('./dataParser');
-var searcher = require('./searcher');
+var loader = require('./core/dataLoader');
+var parser = require('./core/dataParser');
+var searcher = require('./core/searcher');
 
 var mainWindow = null;
 
@@ -54,7 +54,7 @@ function createWindow() {
     mainWindow.loadURL(`file://${__dirname}/index.html`);
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
     mainWindow.webContents.on('did-finish-load', function () {
         loader.loadResources(mainWindow, function(buffer) {
