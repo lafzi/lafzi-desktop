@@ -8,6 +8,10 @@ ipc.on('loadProgress', function(e, percent) {
     document.getElementById('progress').style.width = percent.toFixed(2) + '%';
 });
 
+ipc.on('loadDone', function(e, isDone) {
+    if (isDone) $('#progress').fadeOut();
+});
+
 var searchBtn = $('#searchBtn');
 var searchInput = $('#searchInput');
 var searchResult = $('#searchResult');

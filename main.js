@@ -46,9 +46,7 @@ function prepareSearchResult(rankedSearchResult, quranTextData) {
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: 800,
-        height: 600,
-        resizable: false,
-        maximizable: false
+        height: 600
     });
 
     mainWindow.loadURL(`file://${__dirname}/index.html`);
@@ -69,8 +67,9 @@ function createWindow() {
             dataIndex['v'] = parser.parseIndex(buffer['index_v']);
 
             allDataReady = true;
-            console.log("ALL READY");
-            
+            console.log("MAIN: ALL READY");
+
+            mainWindow.webContents.send('loadDone', true);
         });
     });
 
