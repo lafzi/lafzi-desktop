@@ -1,4 +1,7 @@
-
+/**
+ * @param {Array.<number>} arr
+ * @returns {number}
+ */
 function contiguityScore(arr) {
 
     var diff = [];
@@ -15,7 +18,12 @@ function contiguityScore(arr) {
 
 }
 
-// Longest Contiguous Subsequence
+/**
+ * Longest Contiguous Subsequence
+ * @param {Array.<number>} seq
+ * @param {number} [maxgap=7]
+ * @returns {Array.<number>}
+ */
 function LCS(seq, maxgap) {
     if (maxgap === undefined) maxgap = 7;
 
@@ -42,6 +50,10 @@ function LCS(seq, maxgap) {
 
 }
 
+/**
+ * @param {Object.<string,Array.<number>>} obj
+ * @returns {Array.<number>}
+ */
 function flattenValues(obj) {
     var result = [];
     var keys = Object.keys(obj);
@@ -52,6 +64,11 @@ function flattenValues(obj) {
     return result;
 }
 
+/**
+ * @param {Array.<number>} hlSequence
+ * @param {number} [minLength=3]
+ * @returns {Array.<Array.<number>>}
+ */
 function highlightSpan(hlSequence, minLength) {
     if (minLength === undefined) minLength = 3;
 
@@ -75,14 +92,6 @@ function highlightSpan(hlSequence, minLength) {
 
     return result;
 }
-
-// console.log(contiguityScore([1,3,4,5,6,18]));
-// console.log(LCS([7,33,209,218,233,8,210,202,311,212,213,291,1,214,292,2,158,190,215,265,275,216,217]));
-// console.log(flattenValues({
-//     'abc': [1,5,7,9],
-//     'def': [8,9,1,1, 2]
-// }));
-// console.log(highlightSpan([0, 0, 1, 3, 4, 5, 6, 7, 20, 22, 24], 3));
 
 module.exports.flattenValues = flattenValues;
 module.exports.contiguityScore = contiguityScore;

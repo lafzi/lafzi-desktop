@@ -1,5 +1,9 @@
 var fs = require('fs');
 
+/**
+ * @param {BrowserWindow} rendererWindow
+ * @param {doneCallback} callback
+ */
 function loadResources(rendererWindow, callback) {
 
     var files = [
@@ -45,6 +49,10 @@ function loadResources(rendererWindow, callback) {
 
 }
 
+/**
+ * @callback doneCallback
+ * @param {Object.<string,string>} buffer
+ */
 module.exports.loadResources = loadResources;
 
 

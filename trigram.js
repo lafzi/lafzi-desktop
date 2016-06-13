@@ -1,4 +1,8 @@
-
+/**
+ * Extract trigrams from string
+ * @param {string} string
+ * @returns {Array.<string>}
+ */
 function trigram(string) {
 
     string = string.trim();
@@ -16,6 +20,11 @@ function trigram(string) {
 
 }
 
+/**
+ * Extract trigrams with frequencies
+ * @param {string} string
+ * @returns {Object.<string,number>}
+ */
 function extract(string) {
 
     var trig = trigram(string);

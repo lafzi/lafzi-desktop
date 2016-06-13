@@ -15,6 +15,10 @@ var LafziDocument = function() {
 };
 
 /**
+ * @param {Object.<string,Array.<{docID:Number,freq:Number,pos:Array.<Number>}>>} docIndex
+ * @param {string} query
+ * @param {number} threshold
+ * @param {string} [mode='v']
  * @returns {Array.<LafziDocument>}
  */
 module.exports.search = function (docIndex, query, threshold, mode) {
@@ -96,6 +100,7 @@ Array.prototype.unique = function(){
  * @param {Array.<LafziDocument>} filteredDocs
  * @param {Array.<Array>} posmapData
  * @param {Array.<{surah:Number,name:string,ayat:Number,text:string,trans:string}>} quranTextData
+ * @returns {Array.<LafziDocument>}
  */
 module.exports.rank = function (filteredDocs, posmapData, quranTextData) {
 

@@ -15,9 +15,11 @@ function strtoupper(str) {
 
 // =========== original Lafzi code ==================
 
-// mengodekan teks latin (lafadz) menjadi kode fonetik
-// param  : $string lafadz dalam teks latin
-// return : string kode fonetik
+/**
+ * mengodekan teks latin (lafadz) menjadi kode fonetik
+ * @param {string} $string lafadz dalam teks latin
+ * @returns {string} string kode fonetik
+ */
 function id_fonetik($string) {
 
     // preproses : uppercase, jadikan spasi tunggal, ubah - jadi spasi, hilangkan semua karakter selain alphabet & ` & '
@@ -43,6 +45,11 @@ function id_fonetik($string) {
 
 }
 
+/**
+ * mengodekan teks latin (lafadz) menjadi kode fonetik, dihilangkan vokalnya
+ * @param {string} $string lafadz dalam teks latin
+ * @returns {string} string kode fonetik
+ */
 function id_fonetik_tanpavokal($string) {
 
     // preproses : uppercase, jadikan spasi tunggal, ubah - jadi spasi, hilangkan semua karakter selain alphabet & ` & '

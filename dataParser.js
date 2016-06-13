@@ -1,8 +1,9 @@
 
-/*
+/**
  * Parse Lafzi text data to some defined structures
+ * @param {string} buffer
+ * @returns {Object.<Number,Object.<Number,string>>}
  */
-
 module.exports.parseMuqathaat = function (buffer) {
     // Result:
     // Array[noSurat][noAyat] = text
@@ -25,6 +26,11 @@ module.exports.parseMuqathaat = function (buffer) {
     return result;
 };
 
+/**
+ * @param {string} bufferText
+ * @param {string} bufferTrans
+ * @returns {Array.<{surah:Number,name:string,ayat:Number,text:string,trans:string}>}
+ */
 module.exports.parseQuran = function(bufferText, bufferTrans) {
 
     var lineText = bufferText.split('\n');
@@ -47,12 +53,20 @@ module.exports.parseQuran = function(bufferText, bufferTrans) {
     return result;
 };
 
+/**
+ * convert comma-delimited string to int array
+ * @param {string} str
+ * @returns {Array.<Number>}
+ */
 function strToIntArray(str) {
-    // convert comma-delimited string to int array
     var arr = str.split(',');
     return arr.map(function (val) {return Number(val)});
 }
 
+/**
+ * @param {string} buffer
+ * @returns {Array.<Array>}
+ */
 module.exports.parsePosmap = function (buffer) {
 
     var lines = buffer.split('\n');
@@ -67,6 +81,10 @@ module.exports.parsePosmap = function (buffer) {
 
 };
 
+/**
+ * @param {string} buffer
+ * @returns {Object.<string,Array.<{docID:Number,freq:Number,pos:Array.<Number>}>>}
+ */
 module.exports.parseIndex = function (buffer) {
 
     var lines = buffer.split('\n');
@@ -97,25 +115,4 @@ module.exports.parseIndex = function (buffer) {
     return result;
 
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
