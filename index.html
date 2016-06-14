@@ -2,31 +2,33 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="./res/main.css">
     <title>Lafzi</title>
 </head>
 <body>
-<h1>Hello World!</h1>
-<!-- All of the Node.js APIs are available in this renderer process. -->
-We are using node
-<script>document.write(process.versions.node)</script>
-,
-Chromium
-<script>document.write(process.versions.chrome)</script>
-,
-and Electron
-<script>document.write(process.versions.electron)</script>
-.
 
-<div id="progress" style="display: block; background-color: red; height: 10px;">&nbsp;</div>
+<div id="main-wrap">
+    <div id="header-container">
+        <div id="header">
+            <img src="res/img/logo-s.png" alt="Lafzi" id="logo-small" width="124" height="54"/>
+            <div id="srp-search-form">
+                <div id="search-form-container">
+                    <div id="search-form">
+                        <input type="text" name="q" id="search-box" value="" autocomplete="off"/><input type="submit" value="Cari" id="search-submit"/>
+                    </div>
+                    <div id="progress-container">
+                        <div id="progress" style="width: 0px;">&nbsp;</div>
+                        <div class="loading-text">Memuat...</div>
+                    </div>
+                </div>
+            </div>
 
-<hr/>
-
-<div id="searchform">
-    <input type="text" id="searchInput" size="20"/>
-    <input type="button" id="searchBtn" value="Cari"/>
+        </div>
+    </div>
+    <div id="body-container">
+        <div id="searchResult"></div>
+    </div>
 </div>
-
-<pre id="searchResult"></pre>
 
 </body>
 <script>window.$ = window.jQuery = require('jquery');</script>

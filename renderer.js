@@ -5,21 +5,24 @@
 var ipc = require('electron').ipcRenderer;
 
 ipc.on('loadProgress', function(e, percent) {
-    document.getElementById('progress').style.width = percent.toFixed(2) + '%';
+    $('#progress').width(percent.toFixed(2) + '%');
 });
 
 ipc.on('loadDone', function(e, isDone) {
-    if (isDone) $('#progress').fadeOut();
+    if (isDone) {
+        $('#search-form').show();
+        $('#progress-container').fadeOut();
+    }
 });
 
-var searchBtn = $('#searchBtn');
-var searchInput = $('#searchInput');
-var searchResult = $('#searchResult');
+var $searchBtn = $('#search-submit');
+var $searchInput = $('#search-box');
+var $searchResult = $('#searchResult');
 
-searchBtn.on('click', function () {
-    ipc.send('invokeSearch', searchInput.val());
+$searchBtn.on('click', function () {
+    ipc.send('invokeSearch', $searchInput.val());
     ipc.once('searchDone', function (event, result) {
-        searchResult.html(JSON.stringify(result, null, 2));
+        $searchResult.html(JSON.stringify(result, null, 2));
     });
 });
 

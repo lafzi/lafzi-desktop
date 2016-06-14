@@ -46,7 +46,9 @@ function prepareSearchResult(rankedSearchResult, quranTextData) {
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: 800,
-        height: 600
+        height: 600,
+        minWidth: 800,
+        minHeight: 600
     });
 
     mainWindow.loadURL(`file://${__dirname}/index.html`);
@@ -54,7 +56,7 @@ function createWindow() {
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
 
-    mainWindow.webContents.on('did-finish-load', function () {
+    mainWindow.webContents.on('dom-ready', function () {
         loader.loadResources(mainWindow, function(buffer) {
             dataMuqathaat = parser.parseMuqathaat(buffer['muqathaat']);
             dataQuran = parser.parseQuran(buffer['quran_teks'], buffer['quran_trans_indonesian']);
