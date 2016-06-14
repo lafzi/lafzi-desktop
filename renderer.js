@@ -19,11 +19,14 @@ var $searchBtn = $('#search-submit');
 var $searchInput = $('#search-box');
 var $searchResult = $('#searchResult');
 var $introHelp = $('#intro-help');
+var $overlay = $('#body-overlay');
 
 $searchBtn.on('click', function () {
     $introHelp.fadeOut();
+    $overlay.show();
     ipc.send('invokeSearch', $searchInput.val());
     ipc.once('searchDone', function (event, result) {
+        $overlay.fadeOut();
         $searchResult.html(JSON.stringify(result, null, 2));
     });
 });

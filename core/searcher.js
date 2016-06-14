@@ -19,9 +19,9 @@ var LafziDocument = function() {
  * @param {string} query
  * @param {number} threshold
  * @param {string} [mode='v']
- * @returns {Array.<LafziDocument>}
+ * @param {searchCb} callback
  */
-module.exports.search = function (docIndex, query, threshold, mode) {
+module.exports.search = function (docIndex, query, threshold, mode, callback) {
     //  mode = v | nv
     if (mode === undefined) mode = 'v';
     var queryFinal;
@@ -69,7 +69,7 @@ module.exports.search = function (docIndex, query, threshold, mode) {
         var doc = matchedDocs[docID];
 
         var lcs = array.LCS(array.flattenValues(doc.matchTerms));
-        var orderScore = lcs.length * 1.0;
+        var orderScore = lcs.length;
 
         doc.LCS = lcs;
         doc.contigScore = array.contiguityScore(lcs);
@@ -80,9 +80,13 @@ module.exports.search = function (docIndex, query, threshold, mode) {
         }
     }
 
-    return filteredDocs;
+    callback(filteredDocs);
 
 };
+/**
+ * @callback searchCb
+ * @param {Array.<LafziDocument>} res
+ */
 
 Array.prototype.unique = function(){
     var u = {}, a = [];
@@ -100,9 +104,9 @@ Array.prototype.unique = function(){
  * @param {Array.<LafziDocument>} filteredDocs
  * @param {Array.<Array>} posmapData
  * @param {Array.<{surah:Number,name:string,ayat:Number,text:string,trans:string}>} quranTextData
- * @returns {Array.<LafziDocument>}
+ * @param {rankCb} callback
  */
-module.exports.rank = function (filteredDocs, posmapData, quranTextData) {
+module.exports.rank = function (filteredDocs, posmapData, quranTextData, callback) {
 
     for (var i = 0; i < filteredDocs.length; i++) {
         var doc = filteredDocs[i];
@@ -144,6 +148,42 @@ module.exports.rank = function (filteredDocs, posmapData, quranTextData) {
         return docB.score - docA.score;
     });
 
-    return filteredDocs;
+    callback(filteredDocs);
 
 };
+/**
+ * @callback rankCb
+ * @param {Array.<LafziDocument>} res
+ */
+
+/**
+ * Prepare search result for view
+ * @param {Array.<{id:number,matchCount:number,score:number,highlightPos:Array.<number>}>}  rankedSearchResult
+ * @param {Array.<{surah:Number,name:string,ayat:Number,text:string,trans:string}>}         quranTextData
+ * @param {prepareCb} callback
+ */
+module.exports.prepare = function (rankedSearchResult, quranTextData, callback) {
+
+    var result = [];
+    for (var i = 0; i < rankedSearchResult.length; i++) {
+        var searchRes = rankedSearchResult[i];
+        var quranData = quranTextData[searchRes.id - 1];
+        var obj = {
+            surah: quranData.surah,
+            name: quranData.name,
+            ayat: quranData.ayat,
+            text: quranData.text,
+            trans: quranData.trans,
+            score: searchRes.score,
+            highlightPos: searchRes.highlightPos
+        };
+        result.push(obj);
+    }
+
+    callback(result);
+
+};
+/**
+ * @callback prepareCb
+ * @param {Array.<{surah:Number,name:string,ayat:Number,text:string,trans:string,score:number,highlightPos:Array.<number>}>} res
+ */
