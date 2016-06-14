@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./res/main.css">
+    <link rel="stylesheet" href="./res/hilight.css">
     <title>Lafzi</title>
 </head>
 <body>
@@ -33,7 +34,7 @@
         </h3>
     </div>
     <div id="body-container">
-        <div id="intro-help" class="bg-dots-light">
+        <div id="intro-help" class="bg-dots-light" style="display: none;">
             <p>
                 Aplikasi ini dapat mencari suatu lafadz dalam Al-Quran.
                 Ketikkan potongan ayat atau lafadz dalam Al-Quran yang ingin dicari (dalam tulisan latin), contoh:
@@ -48,7 +49,23 @@
                 Tips: Gunakan spasi untuk pemisah antar-kata agar lebih akurat.
             </p>
         </div>
-        <div id="searchResult"></div>
+        <div id="searchResult">
+            <div class="search-result-block" id="srb-template" style="display: none;">
+                <div class="sura-name">
+                    <div class="num"></div>
+                    <span class="aya_name"></span>
+                    <div class="aya-tools">
+                        <a class="sura-link graybtn" title="Buka ayat ini di Al-Quran online"
+                                              target="_blank"><span class="icon"></span> Buka di Al-Quran</a>
+                        <a class="sura-link graybtn" title="Salin" href="#" style="margin-right: 5px;">Salin Teks</a>
+                    </div>
+                </div>
+                <div class="aya_container">
+                    <div class="aya_text"></div>
+                    <div class="aya_trans"></div>
+                </div>
+            </div>
+        </div>
     </div>
     <div id="body-overlay" style="display: none;">
         &nbsp;

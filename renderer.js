@@ -21,13 +21,39 @@ var $searchResult = $('#searchResult');
 var $introHelp = $('#intro-help');
 var $overlay = $('#body-overlay');
 
+$searchInput.on('keyup', function (event) {
+    if (event.keyCode == 13) {
+        $searchBtn.click();
+    }
+});
+
 $searchBtn.on('click', function () {
     $introHelp.fadeOut();
     $overlay.show();
     ipc.send('invokeSearch', $searchInput.val());
     ipc.once('searchDone', function (event, result) {
         $overlay.fadeOut();
-        $searchResult.html(JSON.stringify(result, null, 2));
+        // $searchResult.html(JSON.stringify(result, null, 2));
+        renderResult(result);
     });
 });
 
+/**
+ * @param {Array.<{surah:Number,name:string,ayat:Number,text:string,trans:string,score:number,highlightPos:Array.<number>}>} result
+ */
+function renderResult(result) {
+
+    $('#srp-header h3').html("Hasil Pencarian (" + (result.length + 1) + " hasil)");
+
+    for (var i = 0; i < result.length; i++) {
+        var res = result[i];
+        var $template = $('#srb-template').clone();
+        $template.attr('id', 'srb-block-' + i);
+        $template.css('display', 'block');
+        if (i%2) $template.addClass('alt');
+        $template.find('.sura-name .num').first().html(i + 1);
+
+        $searchResult.append($template);
+    }
+
+}

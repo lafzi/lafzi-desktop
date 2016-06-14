@@ -188,13 +188,12 @@ label {
     overflow: auto;
     position: absolute;
     top: 130px;
-    box-shadow: inset  0  8px 8px -8px #696868;
     width: 100%;
 }
 
 #body-overlay {
     height: calc(100vh - 130px);
-    background-color: rgba(255,255,255,0.7);
+    background-color: rgba(255,255,255,0.5);
     overflow: auto;
     position: absolute;
     top: 130px;
@@ -207,6 +206,10 @@ label {
     background-color: #EEE;
     height: 17px;
     margin-top: 8px;
+    box-shadow: 0 3px 6px -2px #696868;
+    z-index: 1000;
+    position: absolute;
+    width: 100%;
 }
 
 #srp-header h3 {
@@ -222,7 +225,6 @@ label {
 #intro-help {
     height: calc(100vh - 140px);
     padding: 5px 20px;
-    box-shadow: inset  0  8px 8px -8px #696868;
 }
 
 .search-result-block {
@@ -237,7 +239,7 @@ label {
 .sura-name {
     font-weight: bold;
     color: #666666;
-    display: inline-block;
+    display: block;
 }
 
 .sura-name .num {
@@ -266,8 +268,9 @@ label {
 }
 
 .aya-tools {
-    margin-top: 10px;
     margin-right: 5px;
+    display: inline-block;
+    float: right;
 }
 
 .rel-bar {
