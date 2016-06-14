@@ -183,28 +183,46 @@ label {
 }
 
 #body-container {
-    height: calc(100vh - 90px);
-    /*background-color: red;*/
+    height: calc(100vh - 130px);
+    background-color: red;
     overflow: auto;
     position: absolute;
-    top: 90px;
+    top: 130px;
+    box-shadow: inset  0  8px 8px -8px #696868;
+    width: 100%;
 }
 
+#body-overlay {
+    height: calc(100vh - 130px);
+    background-color: rgba(255,255,255,0.7);
+    overflow: auto;
+    position: absolute;
+    top: 130px;
+    width: 100%;
+}
 
 #srp-header {
     padding: 10px;
-    margin-top: -30px;
+    display: block;
+    background-color: #EEE;
+    height: 17px;
+    margin-top: 8px;
 }
 
 #srp-header h3 {
-    font-size: 20px;
+    font-size: 17px;
     color: #803300;
-    margin: 0px;
-    float: left;
+    margin: 0;
 }
 
 #srp-header #hl-switch {
     float: right;
+}
+
+#intro-help {
+    height: calc(100vh - 140px);
+    padding: 5px 20px;
+    box-shadow: inset  0  8px 8px -8px #696868;
 }
 
 .search-result-block {
@@ -293,37 +311,6 @@ label {
     -webkit-border-radius : 0px 0px 10px 10px;
     -moz-border-radius : 0px 0px 10px 10px;
     border-radius : 0px 0px 10px 10px;
-}
-
-/* Footer */
-
-#footer {
-    text-align: center;
-    position: absolute;
-    bottom: 0px;
-    width: 700px;
-    padding: 20px 10px;
-    border-top: 1px dashed #CCCCCC;
-    background-color: #FFFFFF;
-}
-
-#footer #links {
-    color: #803300;
-}
-
-#footer #links a {
-    color: #803300;
-    text-decoration: none;
-}
-
-#footer #links a:hover {
-    text-decoration: underline;
-}
-
-#footer #copyleft {
-    font-size: 13px;
-    color: #666666;
-    margin-top: 5px;
 }
 
 /* Header */

@@ -18,8 +18,10 @@ ipc.on('loadDone', function(e, isDone) {
 var $searchBtn = $('#search-submit');
 var $searchInput = $('#search-box');
 var $searchResult = $('#searchResult');
+var $introHelp = $('#intro-help');
 
 $searchBtn.on('click', function () {
+    $introHelp.fadeOut();
     ipc.send('invokeSearch', $searchInput.val());
     ipc.once('searchDone', function (event, result) {
         $searchResult.html(JSON.stringify(result, null, 2));
