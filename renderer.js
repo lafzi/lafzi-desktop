@@ -20,7 +20,7 @@ ipc.on('loadDone', function(e, isDone) {
 var $searchBtn = $('#search-submit');
 var $searchInput = $('#search-box');
 var $searchResult = $('#searchResult');
-var $introHelp = $('#intro-help');
+var $bodyMessage = $('#body-message');
 var $overlay = $('#body-overlay');
 
 $searchInput.on('keyup', function (event) {
@@ -30,7 +30,9 @@ $searchInput.on('keyup', function (event) {
 });
 
 $searchBtn.on('click', function () {
-    $introHelp.fadeOut();
+    if ($searchInput.val() == '') return;
+
+    $bodyMessage.fadeOut();
     $overlay.show();
     ipc.send('invokeSearch', $searchInput.val());
     ipc.once('searchDone', function (event, result) {
@@ -46,6 +48,12 @@ $searchBtn.on('click', function () {
 function renderResult(result) {
 
     $('#srp-header').find('h3').html("Hasil Pencarian (" + result.length + " hasil)");
+
+    if (result.length == 0) {
+        $bodyMessage.html("<p>Tidak ditemukan hasil pencarian.</p>");
+        $bodyMessage.fadeIn();
+        return;
+    }
 
     for (var i = 0; i < result.length; i++) {
         var res = result[i];

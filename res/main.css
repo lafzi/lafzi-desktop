@@ -240,7 +240,7 @@ label {
     float: right;
 }
 
-#intro-help {
+#body-message {
     height: calc(100vh - 140px);
     padding: 5px 20px;
 }

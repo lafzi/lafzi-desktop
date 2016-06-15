@@ -33,7 +33,7 @@ module.exports.search = function (docIndex, query, threshold, mode, callback) {
 
     var queryTrigrams = trigram.extract(queryFinal);
     if (Object.keys(queryTrigrams).length <= 0)
-        return [];
+        callback([]);
 
     var matchedDocs = {};
 
