@@ -99,10 +99,26 @@ ipc.on('invokeSearch', function (event, query) {
 
 });
 
+var settingsWindow = null;
+
+function createSettingsWindow() {
+
+    if (settingsWindow) return;
+
+    settingsWindow = new BrowserWindow({
+        width: 400,
+        height: 400,
+        frame: false
+    });
+
+    settingsWindow.loadURL(`file://${__dirname}/settings.html`);
+
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', createSettingsWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./res/main.css">
+    <title>Pengaturan Lafzi</title>
+
+    <style>
+        table.settings td {
+            vertical-align: top;
+            padding-bottom: 10px;
+        }
+        table.settings td.settingsLabel {
+            width: 30%;
+        }
+        table.settings td.settingsValue {
+            width: 70%;
+        }
+        table.settings small {
+            font-size: 8pt;
+        }
+        input[type=range] {
+            -webkit-user-select: text;
+            user-select: text;
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-wrap">
+    <div id="srp-header" style="-webkit-app-region: drag; margin-top: 0;">
+        <h3>
+            Pengaturan Lafzi
+        </h3>
+    </div>
+    <div style="padding: 50px 15px;">
+        <table class="settings">
+            <tr>
+                <td class="settingsLabel">Huruf vokal</td>
+                <td class="settingsValue">
+                    <label for="settingsVowel">
+                        <input type="checkbox" name="vowel" id="settingsVowel">
+                        Sertakan huruf vokal
+                    </label>
+                    <br/>
+                    <small>
+                        Jika nonaktif, huruf vokal (AIUEO) tidak akan diperhitungkan dalam pencarian.
+                        Contohnya, pencarian "munafiqun" akan menyertakan juga "munafiqin".
+                    </small>
+                </td>
+            </tr>
+            <tr>
+                <td>Terjemahan</td>
+                <td>
+                    <label for="settingsTrans">
+                        <input type="checkbox" name="trans" id="settingsTrans">
+                        Tampilkan terjemah
+                    </label>
+                    <br/>
+                    <small>
+                        Jika diaktifkan, akan menampilkan terjemahan Al-Quran dalam bahasa Indonesia.
+                    </small>
+                </td>
+            </tr>
+            <tr>
+                <td>Relevansi</td>
+                <td>
+                    <label for="settingsThresholdLow">
+                        <input type="radio" name="threshold" id="settingsThresholdLow" value="0.5">
+                        Rendah
+                    </label>
+                    <label for="settingsThresholdMid">
+                        <input type="radio" name="threshold" id="settingsThresholdMid" value="0.7">
+                        Sedang
+                    </label>
+                    <label for="settingsThresholdHi">
+                        <input type="radio" name="threshold" id="settingsThresholdHi" value="0.9">
+                        Tinggi
+                    </label>
+                    <br/>
+                    <small>
+                        Jika Lafzi tidak menemukan hasil yang diinginkan, cobalah untuk membuat tingkat relevansi
+                        lebih rendah. Sebaliknya jika hasil pencarian terlalu banyak, tingkat relevansi dapat
+                        dibuat lebih tinggi.
+                    </small>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; width: 100%; text-align: center; background-color: #EEE; padding: 15px 0; border-top: 1px solid #ccc;">
+        <input type="button" value="   OK   ">
+    </div>
+</div>
+
+</body>
+</html>
