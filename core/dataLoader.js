@@ -7,8 +7,8 @@ var fs = require('fs');
 function loadResources(rendererWindow, callback) {
 
     var files = [
-        'index_nv.txt',
-        'index_v.txt',
+        'index_nv.jsn',
+        'index_v.jsn',
         'muqathaat.txt',
         'posmap_nv.txt',
         'posmap_v.txt',

@@ -87,32 +87,7 @@ module.exports.parsePosmap = function (buffer) {
  */
 module.exports.parseIndex = function (buffer) {
 
-    var lines = buffer.split('\n');
-    var result = {};
-
-    for (var i = 0; i < lines.length; i++) {
-        var line = lines[i];
-
-        var d = line.split('\x09');
-        var term = d[0];
-        var posts = d[1];
-        result[term] = [];
-        if (posts) {
-            var postsSplitted = posts.split(';');
-            for (var j = 0; j < postsSplitted.length; j++) {
-                var post = postsSplitted[j];
-                var postData = post.split(':');
-                var obj = {
-                    docID: Number(postData[0]),
-                    freq: Number(postData[1]),
-                    pos: strToIntArray(postData[2])
-                };
-                result[term].push(obj);
-            }
-        }
-    }
-
-    return result;
+    return JSON.parse(buffer);
 
 };
 
