@@ -184,7 +184,8 @@ label {
 
 #body-container {
     height: calc(100vh - 130px);
-    background-color: red;
+    background : #FFFFFF url('img/bg-dots.png') top left repeat-x;
+    background-position: 0px -155px !important;
     overflow: auto;
     position: absolute;
     top: 130px;
