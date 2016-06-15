@@ -3,6 +3,8 @@
 // All of the Node.js APIs are available in this process.
 
 var ipc = require('electron').ipcRenderer;
+var clipboard = require('electron').clipboard;
+var shell = require('electron').shell;
 
 ipc.on('loadProgress', function(e, percent) {
     $('#progress').width(percent.toFixed(2) + '%');
@@ -60,6 +62,20 @@ function renderResult(result) {
         $ayatTextContainer.html(hilighted);
 
         $template.find('.aya_container .aya_trans').html(res.trans);
+
+        let textContent = res.name + " (" + res.surah + "): " + res.ayat + "\n\n";
+        textContent += res.text + "\n\n";
+        textContent += res.trans;
+
+        $template.find('.aya_tools .btn_copy').on('click', function () {
+            clipboard.writeText(textContent);
+        });
+
+        let quranURL = "http://quran.ksu.edu.sa/index.php?l=id#aya=" + res.surah + "_" + res.ayat + "&m=hafs&qaree=husary&trans=id_indonesian";
+
+        $template.find('.aya_tools .btn_open').on('click', function () {
+            shell.openExternal(quranURL);
+        });
 
         $searchResult.append($template);
     }

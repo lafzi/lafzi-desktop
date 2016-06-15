@@ -22,6 +22,23 @@ body {
     padding: 0;
 }
 
+body {
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+img {
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
 #main-wrap {
     margin: 0px auto;
     padding: 0px;
@@ -251,7 +268,7 @@ label {
 }
 
 .sura-link, .generalbtn {
-    font-size: 9px;
+    font-size: 11px;
     font-weight: normal;
     text-decoration: none;
     color: #666666;
@@ -268,53 +285,17 @@ label {
     display: inline-block;
 }
 
-.aya-tools {
+.aya_tools {
     margin-right: 5px;
-    display: inline-block;
     float: right;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.2s linear;
 }
 
-.rel-bar {
-    float: right;
-    display: inline-block;
-    width: 170px;
-    font-size: 10px;
-    margin-top: 5px;
-    overflow: hidden;
-    color: #666666;
-}
-
-.rel-bar .relevance {
-    display: inline-block;
-    width: 30px;
-    overflow: hidden;
-    text-align: right;
-    padding-right: 3px;
-    vertical-align: middle;    
-}
-
-.rel-bar .relevance-bar {
-    display: inline-block;
-    width: 135px;
-    height: 4px;
-    background-color: #CCCCCC;
-    /*vertical-align: middle;*/
-}
-
-.rel-bar .relevance-bar .fill {
-    /*display: inline-block;*/
-    height: 4px;
-    background-color: #327e00;
-}
-
-.pager {
-    background-color: #CCCCCC; 
-    padding: 10px; 
-    margin-bottom: 10px; 
-    text-align: center;
-    -webkit-border-radius : 0px 0px 10px 10px;
-    -moz-border-radius : 0px 0px 10px 10px;
-    border-radius : 0px 0px 10px 10px;
+.search-result-block:hover .aya_tools {
+    visibility: visible;
+    opacity: 1;
 }
 
 /* Header */
@@ -364,6 +345,9 @@ label {
 	display:inline-block;
 	text-align:center;
     outline: none;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 .graybtn:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
@@ -373,39 +357,4 @@ label {
 .graybtn:active {
 	position:relative;
 	top:1px;
-}
-/* This button was generated using CSSButtonGenerator.com */
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: 100;
-  background-color: rgb(0,0,0);  
-  background-color: rgba(0,0,0,0.5);
-}
-
-.modalDialog {
-	width: 680px;
-	position: relative;
-	margin: 10% auto;
-	padding: 5px 20px 13px 20px;
-	background: #F4F4F4;
-    box-shadow: 3px 3px 30px 5px rgba(0,0,0,0.3);
-}
-
-.modalDialog textarea {
-    width: 99%;
-    height: 110px;
-    border: 1px solid #AAAAAA;
-    border-radius : 6px;
-    -moz-border-radius : 6px;
-    -webkit-border-radius : 6px;
-    resize: none;
-    outline: none;
-    font-size: 15px;
-    font-family: Arial, sans-serif;
-    padding: 10px 5px;
 }
