@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "async": "~2.0.0-rc.6",
-    "jquery": "~3.0.0"
+    "jquery": "~3.0.0",
+    "electron-settings": "~1.0.4"
   }
 }

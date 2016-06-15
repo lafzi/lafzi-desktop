@@ -2,12 +2,16 @@ var electron = require('electron');
 var app = electron.app;
 var BrowserWindow = electron.BrowserWindow;
 var ipc = electron.ipcMain;
+var ElectronSettings = require('electron-settings');
 
 var loader = require('./core/dataLoader');
 var parser = require('./core/dataParser');
 var searcher = require('./core/searcher');
 
 var mainWindow = null;
+global.appConfig = new ElectronSettings();
+
+console.log("Using config file: " + appConfig.getConfigFilePath());
 
 var dataMuqathaat = null;
 var dataQuran = null;
@@ -16,7 +20,32 @@ var dataIndex = null;
 
 var allDataReady = false;
 
+function loadDefaultConfig() {
+
+    var vowel = appConfig.get('vowel');
+    if (vowel === undefined) {
+        vowel = true;
+        appConfig.set('vowel', vowel)
+    }
+
+    var threshold = appConfig.get('threshold');
+    if (threshold === undefined) {
+        threshold = 0.9;
+        appConfig.set('threshold', threshold)
+    }
+
+    var showTrans = appConfig.get('showTrans');
+    if (showTrans === undefined) {
+        showTrans = true;
+        appConfig.set('showTrans', showTrans)
+    }
+
+}
+
 function createWindow() {
+
+    loadDefaultConfig();
+
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -55,9 +84,12 @@ function createWindow() {
 
 ipc.on('invokeSearch', function (event, query) {
 
+    var mode = (appConfig.get('vowel') == true) ? 'v' : 'nv';
+
     if (allDataReady) {
-        searcher.search(dataIndex.v, query, 0.90, 'v', function (result) {
-            searcher.rank(result, dataPosmap.v, dataQuran, function (ranked) {
+        console.log("SEARCH: threshold=" + appConfig.get('threshold') + " mode=" + mode);
+        searcher.search(dataIndex[mode], query, appConfig.get('threshold'), mode, function (result) {
+            searcher.rank(result, dataPosmap[mode], dataQuran, function (ranked) {
                 searcher.prepare(ranked, dataQuran, function (final) {
                     event.sender.send('searchDone', final);
                 });

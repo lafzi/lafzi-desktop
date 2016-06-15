@@ -5,6 +5,7 @@
 var ipc = require('electron').ipcRenderer;
 var clipboard = require('electron').clipboard;
 var shell = require('electron').shell;
+var appConfig = require('electron').remote.getGlobal('appConfig');
 
 ipc.on('loadProgress', function(e, percent) {
     $('#progress').width(percent.toFixed(2) + '%');
@@ -69,7 +70,8 @@ function renderResult(result) {
         var hilighted = hilight(res.text, res.highlightPos);
         $ayatTextContainer.html(hilighted);
 
-        $template.find('.aya_container .aya_trans').html(res.trans);
+        if(appConfig.get('showTrans'))
+            $template.find('.aya_container .aya_trans').html(res.trans);
 
         let textContent = res.name + " (" + res.surah + "): " + res.ayat + "\n\n";
         textContent += res.text + "\n\n";
@@ -92,13 +94,24 @@ function renderResult(result) {
 
 function hilight(text, posArray) {
     var startPos, endPos;
+
+    // workaround for chromium arabic bug (not completed yet)
     var zwj = "&#x200d;";
 
     for (var i = posArray.length-1; i >= 0; i--) {
         startPos = posArray[i][0];
         endPos   = posArray[i][1]+1;
-        text     = text.splice(endPos, 0, "</span>");
-        text     = text.splice(startPos, 0, "<span class='hl_block'>");
+
+        var spanStart = "<span class='hl_block'>";
+        //if (text[startPos+1] != ' ') spanStart = zwj + spanStart;
+        //if (text[startPos-1] != ' ') spanStart = spanStart + zwj;
+
+        var spanEnd = "</span>";
+        //if (text[endPos+1] != ' ') spanEnd = zwj + spanEnd;
+        //if (text[endPos-1] != ' ') spanEnd = spanEnd + zwj;
+
+        text     = text.splice(endPos, 0, spanEnd);
+        text     = text.splice(startPos, 0, spanStart);
     }
 
     return text;
