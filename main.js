@@ -11,7 +11,7 @@ var searcher = require('./core/searcher');
 var mainWindow = null;
 global.appConfig = new ElectronSettings();
 
-console.log("Using config file: " + appConfig.getConfigFilePath());
+console.log("Using config file: " + global.appConfig.getConfigFilePath());
 
 var dataMuqathaat = null;
 var dataQuran = null;
@@ -84,11 +84,11 @@ function createWindow() {
 
 ipc.on('invokeSearch', function (event, query) {
 
-    var mode = (appConfig.get('vowel') == true) ? 'v' : 'nv';
+    var mode = (global.appConfig.get('vowel') == true) ? 'v' : 'nv';
 
     if (allDataReady) {
-        console.log("SEARCH: threshold=" + appConfig.get('threshold') + " mode=" + mode);
-        searcher.search(dataIndex[mode], query, appConfig.get('threshold'), mode, function (result) {
+        console.log("SEARCH: threshold=" + global.appConfig.get('threshold') + " mode=" + mode);
+        searcher.search(dataIndex[mode], query, global.appConfig.get('threshold'), mode, function (result) {
             searcher.rank(result, dataPosmap[mode], dataQuran, function (ranked) {
                 searcher.prepare(ranked, dataQuran, function (final) {
                     event.sender.send('searchDone', final);
@@ -125,7 +125,20 @@ ipc.on('settingsSave', function (event, obj) {
     global.appConfig.set('showTrans', obj.showTrans);
 
     event.sender.send('settingsSaveDone', true);
+    mainWindow.webContents.send('askToReloadSearch', true);
 
+});
+
+ipc.on('invokeAppQuit', function (event, obj) {
+    if (obj === true) {
+        app.quit();
+    }
+});
+
+ipc.on('invokeSettingsShow', function (event, obj) {
+    if (obj === true) {
+        createSettingsWindow();
+    }
 });
 
 // This method will be called when Electron has finished

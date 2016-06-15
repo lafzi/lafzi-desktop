@@ -5,7 +5,8 @@
 var ipc = require('electron').ipcRenderer;
 var clipboard = require('electron').clipboard;
 var shell = require('electron').shell;
-var appConfig = require('electron').remote.getGlobal('appConfig');
+var remote = require('electron').remote;
+var appConfig = remote.getGlobal('appConfig');
 
 ipc.on('loadProgress', function(e, percent) {
     $('#progress').width(percent.toFixed(2) + '%');
@@ -23,6 +24,10 @@ var $searchInput = $('#search-box');
 var $searchResult = $('#searchResult');
 var $bodyMessage = $('#body-message');
 var $overlay = $('#body-overlay');
+
+ipc.on('askToReloadSearch', function (event) {
+    $searchBtn.click();
+});
 
 $searchInput.on('keyup', function (event) {
     if (event.keyCode == 13) {
@@ -120,3 +125,44 @@ function hilight(text, posArray) {
 String.prototype.splice = function( idx, rem, s ) {
     return (this.slice(0,idx) + s + this.slice(idx + Math.abs(rem)));
 };
+
+// ========= MENU ====================================================
+
+var Menu = remote.Menu;
+
+const template = [
+    {
+        label: 'Program',
+        submenu: [
+            {
+                label: 'Pengaturan',
+                click() {
+                    ipc.send('invokeSettingsShow', true);
+                }
+            },
+            {
+                label: 'Keluar',
+                click() {
+                    ipc.send('invokeAppQuit', true);
+                }
+            }
+        ]
+    },
+    {
+        label: 'Bantuan',
+        role: 'help',
+        submenu: [
+            {
+                label: 'Learn More',
+                click() { require('electron').shell.openExternal('http://electron.atom.io'); }
+            },
+        ]
+    }
+];
+
+const menu = Menu.buildFromTemplate(template);
+Menu.setApplicationMenu(menu);
+
+
+
+
