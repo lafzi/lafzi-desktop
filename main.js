@@ -22,22 +22,22 @@ var allDataReady = false;
 
 function loadDefaultConfig() {
 
-    var vowel = appConfig.get('vowel');
+    var vowel = global.appConfig.get('vowel');
     if (vowel === undefined) {
         vowel = true;
-        appConfig.set('vowel', vowel)
+        global.appConfig.set('vowel', vowel)
     }
 
-    var threshold = appConfig.get('threshold');
+    var threshold = global.appConfig.get('threshold');
     if (threshold === undefined) {
         threshold = 0.9;
-        appConfig.set('threshold', threshold)
+        global.appConfig.set('threshold', threshold)
     }
 
-    var showTrans = appConfig.get('showTrans');
+    var showTrans = global.appConfig.get('showTrans');
     if (showTrans === undefined) {
         showTrans = true;
-        appConfig.set('showTrans', showTrans)
+        global.appConfig.set('showTrans', showTrans)
     }
 
 }
@@ -113,12 +113,25 @@ function createSettingsWindow() {
 
     settingsWindow.loadURL(`file://${__dirname}/settings.html`);
 
+    settingsWindow.on('closed', function () {
+        settingsWindow = null
+    })
 }
+
+ipc.on('settingsSave', function (event, obj) {
+
+    global.appConfig.set('vowel', obj.vowel);
+    global.appConfig.set('threshold', obj.threshold);
+    global.appConfig.set('showTrans', obj.showTrans);
+
+    event.sender.send('settingsSaveDone', true);
+
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createSettingsWindow);
+app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {

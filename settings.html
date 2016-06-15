@@ -88,9 +88,43 @@
         </table>
     </div>
     <div style="position: absolute; bottom: 0; left: 0; width: 100%; text-align: center; background-color: #EEE; padding: 15px 0; border-top: 1px solid #ccc;">
-        <input type="button" value="   OK   ">
+        <input type="button" value="   OK   " id="settingsSave">
     </div>
 </div>
+
+<script>
+    window.$ = window.jQuery = require('jquery');
+
+    var ipc = require('electron').ipcRenderer;
+    var remote = require('electron').remote;
+    var appConfig = remote.getGlobal('appConfig');
+
+    $(document).ready(function () {
+
+        $('#settingsVowel').prop('checked', appConfig.get('vowel'));
+        $('#settingsTrans').prop('checked', appConfig.get('showTrans'));
+        $("input[name=threshold]").val([appConfig.get('threshold')]);
+
+    });
+
+    $('#settingsSave').on('click', function () {
+
+        var settings = {
+            vowel: $('#settingsVowel').is(':checked'),
+            showTrans: $('#settingsTrans').is(':checked'),
+            threshold: Number($("input[name=threshold]:checked").val())
+        };
+
+        ipc.send('settingsSave', settings);
+        ipc.once('settingsSaveDone', function (e, ret) {
+            if (ret) {
+                remote.getCurrentWindow().close();
+            }
+        });
+
+    });
+
+</script>
 
 </body>
 </html>
