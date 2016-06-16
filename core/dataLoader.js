@@ -17,7 +17,7 @@ function loadResources(rendererWindow, callback) {
     ];
 
     var totalSize = 0;
-    var dataRoot = (process.platform === 'darwin') ? (__dirname + '/../data/') : ('../data/');
+    var dataRoot = __dirname + '/../data/';
 
     files.forEach(function (f) {
         totalSize += fs.statSync(dataRoot + f).size;

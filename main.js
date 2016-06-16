@@ -42,6 +42,8 @@ function loadDefaultConfig() {
 
 }
 
+var iconPath = __dirname + '/res/icon.png';
+
 function createMainWindow() {
 
     loadDefaultConfig();
@@ -50,7 +52,8 @@ function createMainWindow() {
         width: 800,
         height: 600,
         minWidth: 800,
-        minHeight: 600
+        minHeight: 600,
+        icon: iconPath
     });
 
     mainWindow.loadURL(`file://${__dirname}/index.html`);
