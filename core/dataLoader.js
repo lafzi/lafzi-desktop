@@ -17,9 +17,10 @@ function loadResources(rendererWindow, callback) {
     ];
 
     var totalSize = 0;
+    var dataRoot = (process.platform === 'darwin') ? (__dirname + '/../data/') : ('../data/');
 
     files.forEach(function (f) {
-        totalSize += fs.statSync('data/' + f).size;
+        totalSize += fs.statSync(dataRoot + f).size;
     });
 
     var loaded = 0;
@@ -30,7 +31,7 @@ function loadResources(rendererWindow, callback) {
         var name = f.slice(0, -4);
         buffer[name] = '';
 
-        var readable = fs.createReadStream('data/' + f);
+        var readable = fs.createReadStream(dataRoot + f);
         readable.on('data', function (chunk) {
             loaded += chunk.length;
             var percent = loaded / totalSize * 100;
