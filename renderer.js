@@ -138,7 +138,7 @@ $('.enter_sample').each(function () {
 
 var Menu = remote.Menu;
 
-const template = [
+var template = [
     {
         label: 'Program',
         submenu: [
@@ -175,6 +175,101 @@ const template = [
         ]
     }
 ];
+
+if (process.platform === 'darwin') {
+    const name = remote.app.getName();
+    template = [{
+        label: name,
+        submenu: [
+            {
+                label: 'Tentang ' + name,
+                click() {
+                    ipc.send('invokeAboutShow', true);
+                }
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Pengaturan...',
+                accelerator: 'Command+,',
+                click() {
+                    ipc.send('invokeSettingsShow', true);
+                }
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Hide ' + name,
+                accelerator: 'Command+H',
+                role: 'hide'
+            },
+            {
+                label: 'Hide Others',
+                accelerator: 'Command+Alt+H',
+                role: 'hideothers'
+            },
+            {
+                label: 'Show All',
+                role: 'unhide'
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Keluar',
+                accelerator: 'Command+Q',
+                click() {
+                    ipc.send('invokeAppQuit', true);
+                }
+            }
+        ]
+    },
+    {
+        label: 'Window',
+        role: 'window',
+        submenu: [
+            {
+                label: 'Minimize',
+                accelerator: 'CmdOrCtrl+M',
+                role: 'minimize'
+            },
+            {
+                label: 'Zoom',
+                role: 'zoom'
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Bring All to Front',
+                role: 'front'
+            }
+        ]
+    },
+    {
+        label: 'Help',
+        role: 'help',
+        submenu: [
+            {
+                label: 'Ada Pertanyaan?',
+                click() {
+                    ipc.send('invokeFaqShow', true);
+                }
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Kunjungi Website',
+                click() {
+                    shell.openExternal('http://apps.cs.ipb.ac.id/lafzi');
+                }
+            }
+        ]
+    }];
+}
 
 const menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
