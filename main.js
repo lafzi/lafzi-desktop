@@ -42,7 +42,7 @@ function loadDefaultConfig() {
 
 }
 
-function createWindow() {
+function createMainWindow() {
 
     loadDefaultConfig();
 
@@ -78,7 +78,7 @@ function createWindow() {
     });
 
     mainWindow.on('closed', function () {
-        mainWindow = null
+        app.quit();
     })
 }
 
@@ -99,6 +99,12 @@ ipc.on('invokeSearch', function (event, query) {
 
 });
 
+ipc.on('invokeAppQuit', function (event, obj) {
+    if (obj === true) {
+        app.quit();
+    }
+});
+
 // SETTINGS WINDOW =====================================================================================================
 
 var settingsWindow = null;
@@ -111,7 +117,8 @@ function createSettingsWindow() {
         width: 400,
         height: 400,
         frame: false,
-        skipTaskbar: true
+        skipTaskbar: true,
+        resizable: false
     });
 
     settingsWindow.loadURL(`file://${__dirname}/settings.html`);
@@ -132,12 +139,6 @@ ipc.on('settingsSave', function (event, obj) {
 
 });
 
-ipc.on('invokeAppQuit', function (event, obj) {
-    if (obj === true) {
-        app.quit();
-    }
-});
-
 ipc.on('invokeSettingsShow', function (event, obj) {
     if (obj === true) {
         createSettingsWindow();
@@ -156,7 +157,8 @@ function createAboutWindow() {
         width: 400,
         height: 400,
         frame: false,
-        skipTaskbar: true
+        skipTaskbar: true,
+        resizable: false
     });
 
     aboutWindow.loadURL(`file://${__dirname}/about.html`);
@@ -172,10 +174,39 @@ ipc.on('invokeAboutShow', function (event, obj) {
     }
 });
 
+// FAQ WINDOW ==========================================================================================================
+
+var faqWindow = null;
+
+function createFaqWindow() {
+
+    if (faqWindow) return;
+
+    faqWindow = new BrowserWindow({
+        width: 400,
+        height: 400,
+        frame: false,
+        skipTaskbar: true,
+        resizable: false
+    });
+
+    faqWindow.loadURL(`file://${__dirname}/faq.html`);
+
+    faqWindow.on('closed', function () {
+        faqWindow = null
+    })
+}
+
+ipc.on('invokeFaqShow', function (event, obj) {
+    if (obj === true) {
+        createFaqWindow();
+    }
+});
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', createMainWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -190,9 +221,6 @@ app.on('activate', function () {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (mainWindow === null) {
-        createWindow();
+        createMainWindow();
     }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.

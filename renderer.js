@@ -161,6 +161,12 @@ const template = [
         role: 'help',
         submenu: [
             {
+                label: 'Pertanyaan?',
+                click() {
+                    ipc.send('invokeFaqShow', true);
+                }
+            },
+            {
                 label: 'Tentang Aplikasi',
                 click() {
                     ipc.send('invokeAboutShow', true);
