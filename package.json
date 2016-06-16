@@ -1,5 +1,6 @@
 {
   "name": "lafzi-desktop",
+  "productName": "Lafzi",
   "version": "1.0.0",
   "description": "Lafzi: Pencarian fonetis ayat Al-Quran",
   "main": "main.js",
