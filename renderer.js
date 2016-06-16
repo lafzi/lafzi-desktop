@@ -126,6 +126,14 @@ String.prototype.splice = function( idx, rem, s ) {
     return (this.slice(0,idx) + s + this.slice(idx + Math.abs(rem)));
 };
 
+$('.enter_sample').each(function () {
+    var $this = $(this);
+    $this.on('click', function () {
+        var text = $(this).closest('li').text();
+        $searchInput.val(text.replace('↖', '').trim());
+    });
+});
+
 // ========= MENU ====================================================
 
 var Menu = remote.Menu;
@@ -153,9 +161,11 @@ const template = [
         role: 'help',
         submenu: [
             {
-                label: 'Learn More',
-                click() { require('electron').shell.openExternal('http://electron.atom.io'); }
-            },
+                label: 'Tentang Aplikasi',
+                click() {
+                    ipc.send('invokeAboutShow', true);
+                }
+            }
         ]
     }
 ];

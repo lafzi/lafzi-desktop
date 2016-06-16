@@ -56,7 +56,7 @@ function createWindow() {
     mainWindow.loadURL(`file://${__dirname}/index.html`);
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 
     mainWindow.webContents.on('dom-ready', function () {
         loader.loadResources(mainWindow, function(buffer) {
@@ -99,6 +99,8 @@ ipc.on('invokeSearch', function (event, query) {
 
 });
 
+// SETTINGS WINDOW =====================================================================================================
+
 var settingsWindow = null;
 
 function createSettingsWindow() {
@@ -108,7 +110,8 @@ function createSettingsWindow() {
     settingsWindow = new BrowserWindow({
         width: 400,
         height: 400,
-        frame: false
+        frame: false,
+        skipTaskbar: true
     });
 
     settingsWindow.loadURL(`file://${__dirname}/settings.html`);
@@ -138,6 +141,34 @@ ipc.on('invokeAppQuit', function (event, obj) {
 ipc.on('invokeSettingsShow', function (event, obj) {
     if (obj === true) {
         createSettingsWindow();
+    }
+});
+
+// ABOUT WINDOW ========================================================================================================
+
+var aboutWindow = null;
+
+function createAboutWindow() {
+
+    if (aboutWindow) return;
+
+    aboutWindow = new BrowserWindow({
+        width: 400,
+        height: 400,
+        frame: false,
+        skipTaskbar: true
+    });
+
+    aboutWindow.loadURL(`file://${__dirname}/about.html`);
+
+    aboutWindow.on('closed', function () {
+        aboutWindow = null
+    })
+}
+
+ipc.on('invokeAboutShow', function (event, obj) {
+    if (obj === true) {
+        createAboutWindow();
     }
 });
 

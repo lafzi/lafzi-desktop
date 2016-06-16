@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./res/main.css">
+    <title>Tentang Lafzi</title>
+
+    <style>
+        body {
+            border: 1px solid #CCCCCC;
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-wrap">
+    <div id="srp-header" style="-webkit-app-region: drag; margin-top: 0;">
+        <h3>
+            Tentang Lafzi
+        </h3>
+    </div>
+    <div style="padding: 60px 15px; text-align: center;">
+        <img src="res/icon.png" width="132" height="132"/>
+        <p>
+            <small>
+                Aplikasi ini adalah hasil dari penelitian tugas akhir Departemen Ilmu Komputer, Institut Pertanian Bogor.
+            </small>
+        </p>
+
+        <p>
+            <small>
+                Website: <a href="javascript:openExternal('http://apps.cs.ipb.ac.id/lafzi')">http://apps.cs.ipb.ac.id/lafzi</a>
+                <br/>
+                Kontak:  <a href="javascript:openExternal('mailto:muhammad.abrari@gmail.com')">muhammad.abrari@gmail.com</a>
+            </small>
+        </p>
+
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; width: 100%; text-align: center; background-color: #EEE; padding: 15px 0; border-top: 1px solid #ccc;">
+        <input type="button" value="   Tutup   " id="windowClose">
+    </div>
+</div>
+
+<script>
+    window.$ = window.jQuery = require('jquery');
+    var remote = require('electron').remote;
+    var shell = require('electron').shell;
+
+    $('#windowClose').on('click', function () {
+        remote.getCurrentWindow().close();
+    });
+
+    function openExternal(uri) {
+        shell.openExternal(uri);
+    }
+
+</script>
+
+</body>
+</html>
