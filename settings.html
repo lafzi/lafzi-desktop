@@ -24,14 +24,20 @@
             user-select: text;
         }
         body {
-            border: 1px solid #CCCCCC;
+            box-shadow:inset 0px 0px 0px 1px #ccc;
         }
     </style>
 </head>
 <body>
 
 <div id="main-wrap">
-    <div id="srp-header" style="-webkit-app-region: drag; margin-top: 0;">
+    <div id="srp-header" style="
+    -webkit-app-region: drag;
+    margin-top: 0;
+    top: 1px;
+    left: 1px;
+    width: calc(100vh - 22px);
+    ">
         <h3>
             Pengaturan Lafzi
         </h3>
@@ -90,7 +96,16 @@
             </tr>
         </table>
     </div>
-    <div style="position: absolute; bottom: 0; left: 0; width: 100%; text-align: center; background-color: #EEE; padding: 15px 0; border-top: 1px solid #ccc;">
+    <div style="
+        position: absolute;
+        bottom: 1px;
+        left: 1px;
+        width: calc(100vh - 2px);
+        text-align: center;
+        background-color: #EEE;
+        padding: 15px 0;
+        border-top: 1px solid #ccc;
+        ">
         <input type="button" value="   Simpan   " id="settingsSave">
     </div>
 </div>

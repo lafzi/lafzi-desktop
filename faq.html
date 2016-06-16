@@ -7,19 +7,32 @@
 
     <style>
         body {
-            border: 1px solid #CCCCCC;
+            box-shadow:inset 0px 0px 0px 1px #ccc;
         }
     </style>
 </head>
 <body>
 
 <div id="main-wrap">
-    <div id="srp-header" style="-webkit-app-region: drag; margin-top: 0;">
+    <div id="srp-header" style="
+    -webkit-app-region: drag;
+    margin-top: 0;
+    top: 1px;
+    left: 1px;
+    width: calc(100vh - 22px);
+    ">
         <h3>
             Pertanyaan dan Jawaban
         </h3>
     </div>
-    <div style="padding: 5px 15px; position: absolute; top: 40px; width: 370px; height: 298px; overflow: auto;">
+    <div style="
+    padding: 5px 15px;
+    position: absolute;
+    top: 40px;
+    width: calc(100vh - 32px);
+    height: 298px;
+    overflow: auto;
+    ">
         <p>
             <strong>Hasil pencarian terurut apa?</strong>
             <br/>
@@ -75,7 +88,16 @@
         </p>
 
     </div>
-    <div style="position: absolute; bottom: 0; left: 0; width: 100%; text-align: center; background-color: #EEE; padding: 15px 0; border-top: 1px solid #ccc;">
+    <div style="
+        position: absolute;
+        bottom: 1px;
+        left: 1px;
+        width: calc(100vh - 2px);
+        text-align: center;
+        background-color: #EEE;
+        padding: 15px 0;
+        border-top: 1px solid #ccc;
+        ">
         <input type="button" value="   Tutup   " id="windowClose">
     </div>
 </div>
