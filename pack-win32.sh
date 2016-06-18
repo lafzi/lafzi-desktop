@@ -1,0 +1,1 @@
+electron-packager . --platform=win32 --arch=all --overwrite --asar --icon=res/icon.ico --version-string.CompanyName="CS IPB" --version-string.ProductName="Lafzi" --version-string.FileDescription="Lafzi" --version-string.OriginalFilename="lafzi.exe" --version-string.InternalName="Lafzi" --app-copyright="Computer Science IPB" --app-version="1.0"
