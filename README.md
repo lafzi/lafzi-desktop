@@ -29,3 +29,8 @@ Beberapa hal yang belum terimplementasikan (refer ke repositori [lafzi-web](http
 - [ ] Tampilan untuk beberapa ayat yang diawali muqatha'ah.
 - [ ] Indeks dan tampilan yang baru (rasm Utsmani) (refer ke repositori [lafzi-indexer](https://github.com/lafzi/lafzi-indexer) untuk indeks barunya).
 
+Lisensi
+---
+
+GPL (GNU General Public License) v3. Anda bebas menggunakan, memodifikasi, dan mendistribusikan software ini dengan tetap menjadikannya *open-source*.
+
